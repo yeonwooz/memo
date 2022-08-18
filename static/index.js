@@ -21,7 +21,7 @@ function postArticle() {
       alert("ERROR");
     }
   };
-  xhttp.send("aa");
+  xhttp.send(null);
 
   console.log("posted");
   // TODO ajax
