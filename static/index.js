@@ -1,4 +1,10 @@
+import render from "./render.js";
+import attachContent from "./attachContent.js";
+
+const xhttp = new XMLHttpRequest();
+
 main();
+
 function main() {
   console.log("file loaded");
   getContents();
@@ -9,7 +15,25 @@ function main() {
 }
 
 function getContents() {
+  const url = "/memo-list";
+  xhttp.open("GET", url);
 
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4) {
+      if (this.status == 200) {
+        if (xhttp.readyState === 4) {
+          let result = xhttp.response;
+          render(result);
+        }
+      }
+
+      if (this.status == 404) {
+        document.body.innerHTML = "Page not found.";
+      }
+    }
+  };
+
+  xhttp.send(null);
 }
 
 function postContent() {
@@ -31,7 +55,6 @@ function postContent() {
   const urlEncodedData = urlEncodedDataPairs.join("&");
 
   const url = "/memo";
-  const xhttp = new XMLHttpRequest();
   xhttp.open("POST", url, true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.onreadystatechange = () => {
@@ -50,10 +73,4 @@ function postContent() {
   xhttp.send(urlEncodedData);
 
   console.log("posted");
-}
-
-function attachContent(result) {
-  console.log(result);
-
-//  TODO: attach 
 }

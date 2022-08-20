@@ -15,9 +15,14 @@ db = client.memodb2
 def home():
     return render_template('index.html')
 
+@app.route('/memo-list', methods=['GET'])
+def memo_list():
+    # 모든 데이터 조회
+    contents = list(db.memos.find({}, {'_id': 0}))
+    return jsonify({'result': 'success', 'contents': contents})
 
 @app.route('/memo', methods=['GET', 'POST'])
-def api():
+def memo():
     if request.method == 'POST':
         print('posting')
         title = request.form['title']
@@ -25,9 +30,9 @@ def api():
         return post_content(title, text)
     else: 
         print('getting')
-        return get_contents()
+        return get_content()
 
-def get_contents():
+def get_content():
     return
 
 
