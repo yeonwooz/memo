@@ -1,11 +1,9 @@
 function render(results) {
-  console.log(document.querySelector("#card-list"));
   const area = document.querySelector("#card-list");
   let html = "";
   const contents = JSON.parse(results).contents;
 
   for (let { title, text } of contents) {
-    console.log(title, text);
     html += `
     <div class="card mb-3">
       <div class="card-body">

@@ -71,6 +71,5 @@ function postContent() {
     }
   };
   xhttp.send(urlEncodedData);
-  console.log("posted");
-  location.reload();
+  // location.reload();
 }
