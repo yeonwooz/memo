@@ -34,7 +34,7 @@ function postArticle() {
     if (xhttp.status === 200) {
       if (xhttp.readyState === 4) {
         let result = xhttp.response;
-        console.log(result);
+        attachContent(result);
         document.querySelector("#input-title").value = "";
         document.querySelector("#input-text").value = "";
       }
@@ -45,4 +45,8 @@ function postArticle() {
   xhttp.send(urlEncodedData);
 
   console.log("posted");
+}
+
+function attachContent(result) {
+  console.log(result);
 }

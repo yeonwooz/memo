@@ -20,8 +20,16 @@ def post_article():
     print('posting')
     title = request.form['title']
     text = request.form['text']
-    db.memos.insert_one({'title':title, 'text':text})
-    return jsonify({'result': 'success'})
+
+    db.memos.insert_one({'title': title, 'text': text})
+    response = {
+        'result': 'success',
+        'data' : {
+            'title': title, 
+            'text': text
+        }
+    }
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port = 5001, debug=True)
