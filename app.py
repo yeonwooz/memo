@@ -11,8 +11,6 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
-# client = pymongo.MongoClient('mongodb://test:test@localhost',27017)
-# db = client.memodb2
 client = pymongo.MongoClient('localhost',27017)
 db = client.memodb2
 
@@ -38,12 +36,6 @@ def memo():
 
 def post_content(title, text):
     db.memos.insert_one({'title': title, 'text': text})
-    # TODO: last document's id
-    # lastcontent = list(db.memos.find().sort({'_id':-1}).limit(1))
-    # lastcontent = list(db.memos.find().sort({"_id":-1}).limit(1))
-    # print(lastcontent)
-    # content = list(db.memos.find())
-    # db.collectionName.findOne({}, {sort:{$natural:-1}})
     response = {
         'result': 'success',
         'data' : {
@@ -84,4 +76,3 @@ def delete_content(id):
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port = 5001, debug=True)
-
