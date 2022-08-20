@@ -6,19 +6,31 @@ function render(results) {
   for (let { _id, title, text } of contents) {
     html += `
     <div id="${_id}" class="card mb-3">
-      <div class="card-body">
+      <div class="card-body view-mode">
         <h5 class="card-title">${title}</h5>
         <p class="card-text">${text}</p>
         <div class="d-flex flex-row ">
-            <button type="submit" class="btn btn-primary">수정</button>
-            <button id="delete-card-item" type="submit" class="btn btn-primary ml-2">삭제</button>
+            <button type="submit" class="patch-card-item btn btn-primary">수정</button>
+            <button type="submit" class="delete-card-item btn btn-primary ml-2">삭제</button>
         </div>
        </div>
-      </div>
+       <div class="card-body edit-mode hide">
+       <div>
+           <div class="form-group">
+               <input class="form-control mod-title" placeholder=title>
+           </div>
+           <div class="form-group">
+               <textarea class="form-control mod-text" rows="5"
+                   placeholder="내용을 입력하세요"></textarea>
+           </div>
+           <button type="submit" class="save-patch btn btn-primary">저장</button>
+       </div>
+    </div>
+    </div>
     `;
   }
 
-  area.innerHTML = html;
+  area.innerHTML += html;
 }
 
 export default render;
