@@ -14,6 +14,29 @@ function main() {
     .addEventListener("click", postContent);
 }
 
+function deleteContent() {
+  const card = document.querySelector(".card");
+  const urlEncodedData = `id=${card.id}`;
+
+  const url = "/delete-memo";
+  xhttp.open("POST", url, true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+  xhttp.onreadystatechange = () => {
+    console.log("status:", xhttp.readyState, xhttp.status);
+    if (xhttp.status === 200) {
+      if (xhttp.readyState === 4) {
+        let result = xhttp.response;
+        console.log("deleted", result);
+        location.reload();
+      }
+    } else {
+      console.log("ERROR");
+    }
+  };
+  xhttp.send(urlEncodedData);
+}
+
 function getContents() {
   const url = "/memo-list";
   xhttp.open("GET", url);
@@ -24,6 +47,11 @@ function getContents() {
         if (xhttp.readyState === 4) {
           let result = xhttp.response;
           render(result);
+          if (document.querySelector("#delete-card-item")) {
+            document
+              .querySelector("#delete-card-item")
+              .addEventListener("click", deleteContent);
+          }
         }
       }
 
@@ -44,7 +72,7 @@ function postContent() {
     title: title,
     text: text,
   };
-  console.log(params);
+
   const urlEncodedDataPairs = [];
 
   for (let name in params) {
@@ -57,6 +85,7 @@ function postContent() {
   const url = "/memo";
   xhttp.open("POST", url, true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
   xhttp.onreadystatechange = () => {
     console.log("status:", xhttp.readyState, xhttp.status);
     if (xhttp.status === 200) {
@@ -67,9 +96,8 @@ function postContent() {
         document.querySelector("#input-text").value = "";
       }
     } else {
-      alert("ERROR");
+      console.log("ERROR");
     }
   };
   xhttp.send(urlEncodedData);
-  // location.reload();
 }

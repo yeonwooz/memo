@@ -1,13 +1,20 @@
 from flask import Flask, render_template, jsonify, request
-import requests
-from pymongo import MongoClient
+import pymongo
+import json
+from bson import ObjectId
 
 app = Flask(__name__)
 
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
+
 #  TODO: replace 
-# client = MongoClient('mongodb://test:test@localhost',27017)
+# client = pymongo.MongoClient('mongodb://test:test@localhost',27017)
 # db = client.memodb2
-client = MongoClient('localhost',27017)
+client = pymongo.MongoClient('localhost',27017)
 db = client.memodb2
 
 
@@ -18,26 +25,36 @@ def home():
 @app.route('/memo-list', methods=['GET'])
 def memo_list():
     # 모든 데이터 조회
-    contents = list(db.memos.find({}, {'_id': 0}))
-    return jsonify({'result': 'success', 'contents': contents})
+    contents = list(db.memos.find())
+    encodedData = JSONEncoder().encode(contents)
+    return jsonify({'result': 'success', 'contents': encodedData})
 
-@app.route('/memo', methods=['GET', 'POST'])
+@app.route('/memo', methods=['GET', 'POST', 'DELETE'])
 def memo():
     if request.method == 'POST':
-        print('posting')
         title = request.form['title']
         text = request.form['text']
         return post_content(title, text)
-    else: 
-        print('getting')
+    else:
         return get_content()
 
-def get_content():
-    return
+@app.route('/delete-memo', methods=['POST'])
+def delete():
+        id = request.form['id']
+        return delete_content(ObjectId(id))
 
+def delete_content(id):
+    db.memos.delete_one({'_id': ObjectId(id)})
+    return jsonify({'result': 'delete success'})
 
 def post_content(title, text):
     db.memos.insert_one({'title': title, 'text': text})
+    # TODO: last document's id
+    # lastcontent = list(db.memos.find().sort({'_id':-1}).limit(1))
+    # lastcontent = list(db.memos.find().sort({"_id":-1}).limit(1))
+    # print(lastcontent)
+    # content = list(db.memos.find())
+    # db.collectionName.findOne({}, {sort:{$natural:-1}})
     response = {
         'result': 'success',
         'data' : {
@@ -46,6 +63,9 @@ def post_content(title, text):
         }
     }
     return jsonify(response)
+
+def get_content():
+    return
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port = 5001, debug=True)
