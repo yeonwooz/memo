@@ -79,6 +79,7 @@ function postContent() {
       if (xhttp.readyState === 4) {
         let result = xhttp.response;
         attachContent(result);
+        location.reload();
         document.querySelector("#input-title").value = "";
         document.querySelector("#input-text").value = "";
       }
@@ -105,7 +106,6 @@ function deleteContent() {
     if (xhttp.status === 200) {
       if (xhttp.readyState === 4) {
         let result = xhttp.response;
-        console.log("deleted", result);
         location.reload();
       }
     } else {
@@ -117,55 +117,53 @@ function deleteContent() {
 
 function openPatchEditor(target) {
   const id = target.path[3].id;
-  //   document.querySelector('[id="63006fc8c62de151052d822e"]')
-  // const card = document.querySelector(`[id="${id}"]`);
   const viewModeSelector = `[id="${id}"] > .view-mode`;
   const editModeSelector = `[id="${id}"] > .edit-mode`;
-  document.querySelector(viewModeSelector).classList.add("hide");
   document.querySelector(editModeSelector).classList.remove("hide");
+  document.querySelector(viewModeSelector).classList.add("hide");
 }
 
 function hidePatchEditor(target) {
   const id = target.path[3].id;
-  //   document.querySelector('[id="63006fc8c62de151052d822e"]')
-  // const card = document.querySelector(`[id="${id}"]`);
   const viewModeSelector = `[id="${id}"] > .view-mode`;
   const editModeSelector = `[id="${id}"] > .edit-mode`;
   document.querySelector(viewModeSelector).classList.remove("hide");
   document.querySelector(editModeSelector).classList.add("hide");
 }
 
-function patchContent() {
-  //   // const id =
-  //   const title = document.querySelector(".mod-title").value;
-  //   const text = document.querySelector(".mod-text").value;
-  //   if (title.length === 0 && text.length === 0) return;
-  //   const params = {
-  //     title: title,
-  //     text: text,
-  //   };
-  //   const urlEncodedDataPairs = [];
-  //   for (let name in params) {
-  //     urlEncodedDataPairs.push(
-  //       encodeURIComponent(name) + "=" + encodeURIComponent(params[name])
-  //     );
-  //   }
-  //   const urlEncodedData = urlEncodedDataPairs.join("&");
-  //   const url = "/memo";
-  //   xhttp.open("POST", url, true);
-  //   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  //   xhttp.onreadystatechange = () => {
-  //     console.log("status:", xhttp.readyState, xhttp.status);
-  //     if (xhttp.status === 200) {
-  //       if (xhttp.readyState === 4) {
-  //         let result = xhttp.response;
-  //         attachContent(result);
-  //         document.querySelector("#input-title").value = "";
-  //         document.querySelector("#input-text").value = "";
-  //       }
-  //     } else {
-  //       console.log("ERROR");
-  //     }
-  //   };
-  //   xhttp.send(urlEncodedData);
+function patchContent(target) {
+  const id = target.path[3].id;
+  console.log(id);
+  const titleSelector = `[id="${id}"] > .edit-mode > div > div > .mod-title`;
+  const textSelector = `[id="${id}"] > .edit-mode > div > div > .mod-text`;
+  const title = document.querySelector(titleSelector).value;
+  const text = document.querySelector(textSelector).value;
+  console.log(title, text);
+  if (title.length === 0 && text.length === 0) return;
+  const params = {
+    id: id,
+    title: title,
+    text: text,
+  };
+  const urlEncodedDataPairs = [];
+  for (let name in params) {
+    urlEncodedDataPairs.push(
+      encodeURIComponent(name) + "=" + encodeURIComponent(params[name])
+    );
+  }
+  const urlEncodedData = urlEncodedDataPairs.join("&");
+  const url = "/patch-memo";
+  xhttp.open("POST", url, true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.onreadystatechange = () => {
+    console.log("status:", xhttp.readyState, xhttp.status);
+    if (xhttp.status === 200) {
+      if (xhttp.readyState === 4) {
+        location.reload();
+      }
+    } else {
+      console.log("ERROR");
+    }
+  };
+  xhttp.send(urlEncodedData);
 }

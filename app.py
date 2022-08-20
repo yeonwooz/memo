@@ -38,15 +38,6 @@ def memo():
     else:
         return get_content()
 
-@app.route('/delete-memo', methods=['POST'])
-def delete():
-        id = request.form['id']
-        return delete_content(ObjectId(id))
-
-def delete_content(id):
-    db.memos.delete_one({'_id': ObjectId(id)})
-    return jsonify({'result': 'delete success'})
-
 def post_content(title, text):
     db.memos.insert_one({'title': title, 'text': text})
     # TODO: last document's id
@@ -66,6 +57,32 @@ def post_content(title, text):
 
 def get_content():
     return
+
+@app.route('/patch-memo', methods=['POST'])
+def patch():
+    id = request.form['id']
+    title = request.form['title']
+    text = request.form['text']
+    print(id)
+    db.memos.update_one({'_id':  ObjectId(id)}, {'$set' : {'title': title, 'text': text}})
+
+    response = {
+        'result': 'success',
+        'data' : {
+            'title': title, 
+            'text': text
+        }
+    }
+    return jsonify(response)
+
+@app.route('/delete-memo', methods=['POST'])
+def delete():
+        id = request.form['id']
+        return delete_content(ObjectId(id))
+
+def delete_content(id):
+    db.memos.delete_one({'_id': ObjectId(id)})
+    return jsonify({'result': 'delete success'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port = 5001, debug=True)
