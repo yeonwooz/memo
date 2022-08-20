@@ -17,11 +17,10 @@ function render(results) {
        <div class="card-body edit-mode hide">
        <div>
            <div class="form-group">
-               <input class="form-control mod-title" placeholder=title>
+               <input class="form-control mod-title">
            </div>
            <div class="form-group">
-               <textarea class="form-control mod-text" rows="5"
-                   placeholder="내용을 입력하세요"></textarea>
+               <textarea class="form-control mod-text" rows="5"></textarea>
            </div>
            <button type="submit" class="save-patch btn btn-primary">저장</button>
        </div>

@@ -121,6 +121,16 @@ function openPatchEditor(target) {
   const editModeSelector = `[id="${id}"] > .edit-mode`;
   document.querySelector(editModeSelector).classList.remove("hide");
   document.querySelector(viewModeSelector).classList.add("hide");
+
+  const titleSelector = `[id="${id}"] > .edit-mode > div > div > .mod-title`;
+  const textSelector = `[id="${id}"] > .edit-mode > div > div > .mod-text`;
+
+  document.querySelector(titleSelector).placeholder = document.querySelector(
+    `[id="${id}"] > .view-mode > .card-title`
+  ).innerHTML;
+  document.querySelector(textSelector).placeholder = document.querySelector(
+    `[id="${id}"] > .view-mode > .card-text`
+  ).innerHTML;
 }
 
 function hidePatchEditor(target) {
@@ -133,7 +143,6 @@ function hidePatchEditor(target) {
 
 function patchContent(target) {
   const id = target.path[3].id;
-  console.log(id);
   const titleSelector = `[id="${id}"] > .edit-mode > div > div > .mod-title`;
   const textSelector = `[id="${id}"] > .edit-mode > div > div > .mod-text`;
   const title = document.querySelector(titleSelector).value;
