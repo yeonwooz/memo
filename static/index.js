@@ -1,13 +1,18 @@
 main();
 function main() {
   console.log("file loaded");
+  getContents();
 
   document
     .querySelector("#post-article-btn")
-    .addEventListener("click", postArticle);
+    .addEventListener("click", postContent);
 }
 
-function postArticle() {
+function getContents() {
+
+}
+
+function postContent() {
   const title = document.querySelector("#input-title").value;
   const text = document.querySelector("#input-text").value;
   if (title.length === 0 && text.length === 0) return;
@@ -49,4 +54,6 @@ function postArticle() {
 
 function attachContent(result) {
   console.log(result);
+
+//  TODO: attach 
 }

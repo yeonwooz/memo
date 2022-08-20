@@ -15,12 +15,24 @@ db = client.memodb2
 def home():
     return render_template('index.html')
 
-@app.route('/memo', methods=['POST'])
-def post_article():
-    print('posting')
-    title = request.form['title']
-    text = request.form['text']
 
+@app.route('/memo', methods=['GET', 'POST'])
+def api():
+    if request.method == 'POST':
+        print('posting')
+        title = request.form['title']
+        text = request.form['text']
+        post_content(title, text)
+    else: 
+        print('getting')
+        get_contents()
+
+
+def get_contents():
+    return
+
+
+def post_content(title, text):
     db.memos.insert_one({'title': title, 'text': text})
     response = {
         'result': 'success',
