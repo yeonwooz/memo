@@ -15,6 +15,8 @@ function main() {
 }
 
 function deleteContent() {
+  //  TODO: 가장 최근에 추가한 아이템 삭제 구현,
+  //  TODO: DELETE 메서드로 구현
   const card = document.querySelector(".card");
   const urlEncodedData = `id=${card.id}`;
 
