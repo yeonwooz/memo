@@ -1,10 +1,15 @@
 from flask import Flask, render_template, jsonify, request
+import requests
 from pymongo import MongoClient
 
 app = Flask(__name__)
 
-client = MongoClient('mongodb://test:test@localhost',27017)
+#  TODO: replace 
+# client = MongoClient('mongodb://test:test@localhost',27017)
+# db = client.memodb2
+client = MongoClient('localhost',27017)
 db = client.memodb2
+
 
 @app.route('/')
 def home():
@@ -13,7 +18,9 @@ def home():
 @app.route('/memo', methods=['POST'])
 def post_article():
     print('posting')
-    db.memos.insert_one({'title':'title 1', 'comment':'comment 1'})
+    title = request.form['title']
+    text = request.form['text']
+    db.memos.insert_one({'title':title, 'text':text})
     return jsonify({'result': 'success'})
 
 if __name__ == '__main__':
