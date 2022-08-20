@@ -11,12 +11,10 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
-#  TODO: replace 
 # client = pymongo.MongoClient('mongodb://test:test@localhost',27017)
 # db = client.memodb2
 client = pymongo.MongoClient('localhost',27017)
 db = client.memodb2
-
 
 @app.route('/')
 def home():
