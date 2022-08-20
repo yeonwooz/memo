@@ -22,11 +22,10 @@ def api():
         print('posting')
         title = request.form['title']
         text = request.form['text']
-        post_content(title, text)
+        return post_content(title, text)
     else: 
         print('getting')
-        get_contents()
-
+        return get_contents()
 
 def get_contents():
     return
