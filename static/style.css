@@ -17,3 +17,9 @@ body {
 .form-wrapper {
   width: 40%;
 }
+
+.card {
+  width: 18rem;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
