@@ -27,3 +27,14 @@ body {
 .hide {
   display: none;
 }
+
+.ver-container {
+  background-color: #808080;
+  color: #ffffff;
+  border-radius: 10px;
+  height: 3rem;
+}
+
+.version {
+  font-size: 2rem;
+}
