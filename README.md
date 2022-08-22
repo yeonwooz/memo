@@ -1,7 +1,16 @@
-## simple memo
+# simple memo
 
 > front : html, vanillajs
 > back : flask
+
+## 실행
+
+[memo](http://13.209.87.33/)
+<img alt="self memo app" src="./static/self-memo.png" width="500"/>
+
+---
+
+## 공부한 내용 정리
 
 ### 가상환경에서 flask 실행
 
@@ -42,8 +51,10 @@ pip freeze | grep pymongo
 ```
 
 ### pymongo
+
 ```bash
 # .venv
 python3 -m pip install pymongo
 ```
+
 <!--  TODO: html parsing -->
