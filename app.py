@@ -48,9 +48,9 @@ def post_content(title, text):
 def get_content():
     return
 
-@app.route('/patch-memo', methods=['POST'])
-def patch():
-    id = request.form['id']
+@app.route('/patch-memo/<id>', methods=['PUT'])
+def patch(id):
+    # id = request.form['id']
     title = request.form['title']
     text = request.form['text']
     print(id)

@@ -160,8 +160,8 @@ function patchContent(target) {
     );
   }
   const urlEncodedData = urlEncodedDataPairs.join("&");
-  const url = "/patch-memo";
-  xhttp.open("POST", url, true);
+  const url = `/patch-memo/${id}`;
+  xhttp.open("PUT", url, true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.onreadystatechange = () => {
     console.log("status:", xhttp.readyState, xhttp.status);
