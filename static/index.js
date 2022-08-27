@@ -92,13 +92,12 @@ function postContent() {
 
 function deleteContent() {
   //  TODO: 가장 최근에 추가한 아이템 삭제 구현,
-  //  TODO: DELETE 메서드로 구현
   const card = document.querySelector(".card");
   console.log(card);
   const urlEncodedData = `id=${card.id}`;
 
-  const url = "/delete-memo";
-  xhttp.open("POST", url, true);
+  const url = `/delete-memo/${card.id}`;
+  xhttp.open("DELETE", url, true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
   xhttp.onreadystatechange = () => {

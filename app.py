@@ -65,9 +65,10 @@ def patch():
     }
     return jsonify(response)
 
-@app.route('/delete-memo', methods=['POST'])
-def delete():
-        id = request.form['id']
+@app.route('/delete-memo/<id>', methods=['DELETE'])
+def delete(id):
+        print("id", id)
+        # id = request.form['id']
         return delete_content(ObjectId(id))
 
 def delete_content(id):
